@@ -2,34 +2,43 @@ package io.bhupedra.spring5recipeapp.services;
 
 import io.bhupedra.spring5recipeapp.domain.Recipe;
 import io.bhupedra.spring5recipeapp.repositories.RecipeRepository;
-import org.junit.Before;
-import org.junit.Test;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.MockitoAnnotations;
+import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
 
+@ExtendWith(MockitoExtension.class)
 public class RecipeServiceImplTest {
-
-    RecipeService recipeService;
 
     @Mock
     RecipeRepository recipeRepository;
 
-    @Before
+    @InjectMocks
+    RecipeServiceImpl recipeService;
+
+
+    Recipe recipe = new Recipe();
+    @BeforeEach
     public void setUp() throws Exception {
-        MockitoAnnotations.initMocks(this);
-        recipeService = new RecipeServiceImpl(recipeRepository);
+
     }
 
     @Test
     public void getRecipes() {
-        Recipe recipe = new Recipe();
-        HashSet recipeData = new HashSet();
+
+//        Recipe recipe = new Recipe();
+
+        Set<Recipe> recipeData = new HashSet<>();
         recipeData.add(recipe);
 
         when(recipeService.getRecipes()).thenReturn(recipeData);
@@ -41,5 +50,18 @@ public class RecipeServiceImplTest {
 
         //verifying if recipeRepository is called only once
         verify(recipeRepository, times(1)).findAll();
+    }
+
+    @Test
+    void getRecipeById() {
+//        Recipe recipe = new Recipe();
+        recipe.setId(1l);
+        Optional<Recipe> recipeOptional = Optional.of(recipe);
+        when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);
+
+        Recipe returnRecipe = recipeService.getRecipeById(1l);
+        assertNotNull(returnRecipe);
+        verify(recipeRepository, times(1)).findById(anyLong());
+        verify(recipeRepository, never()).findAll();
     }
 }

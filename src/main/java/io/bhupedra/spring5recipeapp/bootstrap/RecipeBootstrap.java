@@ -132,6 +132,9 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
                 "Read more: http://www.simplyrecipes.com/recipes/perfect_guacamole/#ixzz4jvoun5ws");
 //        guacNotes.setRecipe(guacRecipe);
         guacRecipe.setNotes(guacNotes);
+        guacRecipe.setServings(4);
+        guacRecipe.setUrl("https://www.allrecipes.com/recipe/14231/guacamole/");
+        guacRecipe.setSource("simple Guacamole Recipe");
 
 //        guacRecipe.getIngredients().add(new Ingredient("ripe avocados", new BigDecimal(2), eachUom, guacRecipe));
 //        guacRecipe.getIngredients().add(new Ingredient("Kosher salt", new BigDecimal(".5"), teaSpoonUom, guacRecipe));
@@ -213,6 +216,10 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
 
         tacosRecipe.getCategories().add(americanCategory);
         tacosRecipe.getCategories().add(mexicanCategory);
+
+        tacosRecipe.setServings(6);
+        tacosRecipe.setUrl("https://cookieandkate.com/epic-vegetarian-tacos-recipe/");
+        tacosRecipe.setSource("Spicy Taco recipe");
 
         recipes.add(tacosRecipe);
         log.debug("Adding Tacos Recipe");
