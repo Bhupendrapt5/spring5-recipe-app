@@ -1,5 +1,8 @@
 package io.bhupedra.spring5recipeapp.services;
 
+import io.bhupedra.spring5recipeapp.commands.RecipeCommand;
+import io.bhupedra.spring5recipeapp.converters.RecipeCommandToRecipe;
+import io.bhupedra.spring5recipeapp.converters.RecipeToRecipeCommand;
 import io.bhupedra.spring5recipeapp.domain.Recipe;
 import io.bhupedra.spring5recipeapp.repositories.RecipeRepository;
 import lombok.extern.slf4j.Slf4j;
@@ -14,9 +17,15 @@ import java.util.Set;
 public class RecipeServiceImpl implements RecipeService{
 
     private final RecipeRepository recipeRepository;
+    private final RecipeCommandToRecipe recipeCommandToRecipe;
+    private final RecipeToRecipeCommand recipeToRecipeCommand;
 
-    public RecipeServiceImpl(RecipeRepository recipeRepository) {
+
+    public RecipeServiceImpl(RecipeRepository recipeRepository, RecipeCommandToRecipe recipeCommandToRecipe,
+                             RecipeToRecipeCommand recipeToRecipeCommand) {
         this.recipeRepository = recipeRepository;
+        this.recipeCommandToRecipe = recipeCommandToRecipe;
+        this.recipeToRecipeCommand = recipeToRecipeCommand;
     }
 
     @Override
@@ -36,6 +45,16 @@ public class RecipeServiceImpl implements RecipeService{
         }
 
         return getRecipe.get();
+    }
+
+    @Override
+    public RecipeCommand saveRecipeCommand(RecipeCommand command) {
+        Recipe detachRecipe = recipeCommandToRecipe.convert(command);
+
+        Recipe savedRecipe = recipeRepository.save(detachRecipe);
+        log.debug("Saved RecipeId: "+savedRecipe.getId());
+
+        return recipeToRecipeCommand.convert(savedRecipe);
     }
 
 
