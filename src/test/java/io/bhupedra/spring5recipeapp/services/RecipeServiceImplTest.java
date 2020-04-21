@@ -18,6 +18,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
+//@SpringBootTest
 public class RecipeServiceImplTest {
 
     @Mock
@@ -35,8 +36,6 @@ public class RecipeServiceImplTest {
 
     @Test
     public void getRecipes() {
-
-//        Recipe recipe = new Recipe();
 
         Set<Recipe> recipeData = new HashSet<>();
         recipeData.add(recipe);
