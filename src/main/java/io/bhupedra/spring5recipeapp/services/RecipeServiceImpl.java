@@ -7,6 +7,7 @@ import io.bhupedra.spring5recipeapp.domain.Recipe;
 import io.bhupedra.spring5recipeapp.repositories.RecipeRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.HashSet;
 import java.util.Optional;
@@ -47,6 +48,13 @@ public class RecipeServiceImpl implements RecipeService{
         return getRecipe.get();
     }
 
+    @Transactional
+    @Override
+    public RecipeCommand findCommandById(Long l) {
+        return recipeToRecipeCommand.convert(getRecipeById(l));
+    }
+
+    @Transactional
     @Override
     public RecipeCommand saveRecipeCommand(RecipeCommand command) {
         Recipe detachRecipe = recipeCommandToRecipe.convert(command);
@@ -55,6 +63,11 @@ public class RecipeServiceImpl implements RecipeService{
         log.debug("Saved RecipeId: "+savedRecipe.getId());
 
         return recipeToRecipeCommand.convert(savedRecipe);
+    }
+
+    @Override
+    public void deleteById(Long idToDelete) {
+        recipeRepository.deleteById(idToDelete);
     }
 
 
