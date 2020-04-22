@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.*;
 @Controller
 @Slf4j
 public class RecipeController {
-    RecipeService recipeService;
+    private final RecipeService recipeService;
 
     public RecipeController(RecipeService recipeService) {
         this.recipeService = recipeService;
@@ -31,7 +31,7 @@ public class RecipeController {
 
         model.addAttribute("recipe",new RecipeCommand());
 
-        return "recipe/recipeform";
+        return "/recipe/recipeform";
     }
 
     @GetMapping
