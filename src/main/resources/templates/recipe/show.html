@@ -31,11 +31,6 @@
                                 <h5>Categories:</h5>
                             </div>
                             <div class="col-md-9">
-<!--                                <ul th:remove="all">-->
-<!--                                    <li>cat one</li>-->
-<!--                                    <li>cat two</li>-->
-<!--                                    <li>cat three</li>-->
-<!--                                </ul>-->
                                 <ul >
                                     <li th:each="cat : ${recipe.categories}" th:text="${cat.description}">cat one</li>
                                     <li th:remove="all">cat two</li>
