@@ -90,7 +90,7 @@ class RecipeToRecipeCommandTest {
         assertEquals(PREP_TIME, command.getPrepTime());
         assertEquals(DESCRIPTION, command.getDescription());
         assertEquals(DIFFICULTY, command.getDifficulty());
-        assertEquals(DIRECTIONS, command.getDirection());
+        assertEquals(DIRECTIONS, command.getDirections());
         assertEquals(SERVINGS, command.getServings());
         assertEquals(SOURCE, command.getSource());
         assertEquals(URL, command.getUrl());

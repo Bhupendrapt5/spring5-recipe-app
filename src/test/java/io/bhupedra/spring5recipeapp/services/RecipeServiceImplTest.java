@@ -29,6 +29,7 @@ public class RecipeServiceImplTest {
 
 
     Recipe recipe = new Recipe();
+
     @BeforeEach
     public void setUp() throws Exception {
 
@@ -58,7 +59,7 @@ public class RecipeServiceImplTest {
         Optional<Recipe> recipeOptional = Optional.of(recipe);
         when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);
 
-        Recipe returnRecipe = recipeService.getRecipeById(1l);
+        Recipe returnRecipe = recipeService.findById(1l);
         assertNotNull(returnRecipe);
         verify(recipeRepository, times(1)).findById(anyLong());
         verify(recipeRepository, never()).findAll();

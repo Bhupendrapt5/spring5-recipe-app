@@ -40,7 +40,7 @@ class RecipeControllerTest {
         Recipe recipe = new Recipe();
         recipe.setId(1l);
 
-        when(recipeService.getRecipeById(anyLong())).thenReturn(recipe);
+        when(recipeService.findById(anyLong())).thenReturn(recipe);
 
         mockMvc.perform(get("/recipe/1/show"))
                 .andExpect(status().isOk())
