@@ -1,6 +1,7 @@
 package io.bhupedra.spring5recipeapp.services;
 
 import io.bhupedra.spring5recipeapp.domain.Recipe;
+import io.bhupedra.spring5recipeapp.exceptions.NotFoundException;
 import io.bhupedra.spring5recipeapp.repositories.RecipeRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,12 +14,10 @@ import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-//@SpringBootTest
 public class RecipeServiceImplTest {
 
     @Mock
@@ -54,7 +53,6 @@ public class RecipeServiceImplTest {
 
     @Test
     void getRecipeById() {
-//        Recipe recipe = new Recipe();
         recipe.setId(1l);
         Optional<Recipe> recipeOptional = Optional.of(recipe);
         when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);
@@ -63,6 +61,17 @@ public class RecipeServiceImplTest {
         assertNotNull(returnRecipe);
         verify(recipeRepository, times(1)).findById(anyLong());
         verify(recipeRepository, never()).findAll();
+    }
+
+    @Test
+    void getRecipeByIdNotFound() throws Exception {
+
+        Optional<Recipe> recipeOptional = Optional.empty();
+
+        when(recipeRepository.findById(anyLong())).thenReturn(recipeOptional);
+
+        assertThrows(NotFoundException.class, () -> recipeService.findById(1L));
+
     }
 
 
