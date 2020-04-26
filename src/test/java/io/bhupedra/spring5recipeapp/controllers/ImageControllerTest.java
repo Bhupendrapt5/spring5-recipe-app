@@ -35,7 +35,9 @@ class ImageControllerTest {
 
     @BeforeEach
     void setUp() {
-        mockMvc = MockMvcBuilders.standaloneSetup(controller).build();
+        mockMvc = MockMvcBuilders.standaloneSetup(controller)
+                .setControllerAdvice(new ControllerExceptionHandler())
+                .build();
     }
 
     @Test
@@ -50,6 +52,14 @@ class ImageControllerTest {
                 .andExpect(view().name("recipe/imageform"));
     }
 
+    @Test
+    void testGetImageNumberFormatException() throws Exception {
+
+        mockMvc.perform(get("/recipe/kj/image"))
+                .andExpect(status().isBadRequest())
+                .andExpect(view().name("400error"));
+
+    }
     @Test
     public void handleImagePost() throws Exception {
         MockMultipartFile multipartFile =
