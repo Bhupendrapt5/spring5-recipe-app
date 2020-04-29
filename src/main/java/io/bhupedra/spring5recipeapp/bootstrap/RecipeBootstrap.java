@@ -6,6 +6,7 @@ import io.bhupedra.spring5recipeapp.repositories.RecipeRepository;
 import io.bhupedra.spring5recipeapp.repositories.UnitOfMeasureRepository;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationListener;
+import org.springframework.context.annotation.Profile;
 import org.springframework.context.event.ContextRefreshedEvent;
 import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
@@ -15,8 +16,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
+
 @Slf4j
 @Component
+@Profile("default")
 public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEvent> {
 
     private final CategoryRepository categoryRepository;
@@ -151,8 +154,6 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
         //add to return list
         recipes.add(guacRecipe);
 
-        log.debug("Adding guacamole recipe");
-
         //Yummy Tacos
         Recipe tacosRecipe = new Recipe();
         tacosRecipe.setDescription("Spicy Grilled Chicken Taco");
@@ -213,7 +214,6 @@ public class RecipeBootstrap implements ApplicationListener<ContextRefreshedEven
         tacosRecipe.setSource("Simply Recipes");
 
         recipes.add(tacosRecipe);
-        log.debug("Added Taco recipe");
         return recipes;
     }
 }
