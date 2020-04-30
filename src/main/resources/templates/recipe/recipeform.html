@@ -46,14 +46,24 @@
                                 </div>
                             </div>
                             <div class="row">
-                                <div class="col-md-3 form-group">
+                                <div class="col-md-2 form-group">
                                     <label>Categories:</label>
                                 </div>
-                                <div class="col-md-9 form-group">
-                                    <div class="radio">
+                                <div class="col-md-10 form-group">
+
+                                    <div class="radio" th:if="${not #lists.isEmpty(category)}"
+                                         th:each="cat : ${category}">
+                                        <input type="checkbox"
+                                               th:value="${cat.id}" />
+                                        <label th:text="${cat.description}">
+                                        </label>
+                                        </br>
+                                    </div>
+
+                                    <div class="radio" th:remove="all">
                                         <label>
                                             <input type="checkbox" value=""/>
-                                            Cat 1
+                                            Cat 3
                                         </label>
                                     </div>
                                     <div class="radio" th:remove="all">

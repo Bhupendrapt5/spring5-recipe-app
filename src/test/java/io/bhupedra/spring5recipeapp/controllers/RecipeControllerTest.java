@@ -3,6 +3,7 @@ package io.bhupedra.spring5recipeapp.controllers;
 import io.bhupedra.spring5recipeapp.commands.RecipeCommand;
 import io.bhupedra.spring5recipeapp.domain.Recipe;
 import io.bhupedra.spring5recipeapp.exceptions.NotFoundException;
+import io.bhupedra.spring5recipeapp.services.CategoryService;
 import io.bhupedra.spring5recipeapp.services.RecipeService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -25,6 +26,9 @@ class RecipeControllerTest {
 
     @Mock
     RecipeService recipeService;
+
+    @Mock
+    CategoryService categoryService;
 
     @InjectMocks
     RecipeController recipeController;
@@ -98,7 +102,6 @@ class RecipeControllerTest {
 
     @Test
     void testPostNewRecipeFormValidationFail() throws Exception {
-
 
         mockMvc.perform(post("/recipe")
                     .contentType(MediaType.APPLICATION_FORM_URLENCODED)

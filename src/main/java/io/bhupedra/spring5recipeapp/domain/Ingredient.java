@@ -11,6 +11,7 @@ import java.math.BigDecimal;
 @Setter
 @EqualsAndHashCode(exclude = {"recipe"})
 @Entity
+@Table(name = "ingredient")
 public class Ingredient {
 
     @Id
@@ -20,7 +21,6 @@ public class Ingredient {
     private BigDecimal amount;
 
     @OneToOne(fetch = FetchType.EAGER)
-    @JoinColumn(name = "uom_id")
     private UnitOfMeasure uom;
 
     @ManyToOne

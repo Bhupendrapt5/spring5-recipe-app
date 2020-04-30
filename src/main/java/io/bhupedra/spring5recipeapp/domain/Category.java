@@ -11,6 +11,7 @@ import java.util.Set;
 @Setter
 @EqualsAndHashCode(exclude = {"recipes"})
 @Entity
+@Table(name = "category")
 public class Category {
 
     @Id
