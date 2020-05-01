@@ -3,6 +3,7 @@ package io.bhupedra.spring5recipeapp.controllers;
 
 import io.bhupedra.spring5recipeapp.commands.RecipeCommand;
 import io.bhupedra.spring5recipeapp.exceptions.NotFoundException;
+import io.bhupedra.spring5recipeapp.services.CategoryService;
 import io.bhupedra.spring5recipeapp.services.RecipeService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -20,9 +21,11 @@ public class RecipeController {
 
     public static String RECIPE_RECIPEFORM_URL = "recipe/recipeform";
     private final RecipeService recipeService;
+    private final CategoryService categoryService;
 
-    public RecipeController(RecipeService recipeService) {
+    public RecipeController(RecipeService recipeService, CategoryService categoryService) {
         this.recipeService = recipeService;
+        this.categoryService = categoryService;
     }
 
     @GetMapping("/recipe/{id}/show")
@@ -37,6 +40,8 @@ public class RecipeController {
     public String newRecipe(Model model){
         model.addAttribute("recipe", new RecipeCommand());
 
+        model.addAttribute("categories", categoryService.getCategories());
+
         return RECIPE_RECIPEFORM_URL;
     }
 
@@ -44,6 +49,8 @@ public class RecipeController {
     public String updateRecipe(@PathVariable String id, Model model){
 
         model.addAttribute("recipe", recipeService.findCommandById(Long.valueOf(id)));
+
+        model.addAttribute("category", categoryService.getCategories());
 
         return  RECIPE_RECIPEFORM_URL;
     }
@@ -59,7 +66,7 @@ public class RecipeController {
             return RECIPE_RECIPEFORM_URL;
         }
         RecipeCommand savedCommand = recipeService.saveRecipeCommand(command);
-
+        
         return "redirect:/recipe/" + savedCommand.getId() + "/show";
     }
 

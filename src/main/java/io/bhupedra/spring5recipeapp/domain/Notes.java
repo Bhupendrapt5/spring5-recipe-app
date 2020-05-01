@@ -6,10 +6,14 @@ import lombok.Setter;
 
 import javax.persistence.*;
 
+/**
+ * Created by jt on 6/13/17.
+ */
 @Getter
 @Setter
 @EqualsAndHashCode(exclude = {"recipe"})
 @Entity
+@Table(name = "notes")
 public class Notes {
 
     @Id
